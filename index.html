@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GeoJSON LineString Interpolation</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>GeoJSON LineString Interpolation</h1>
+
+      <div class="controls">
+        <div class="control-group">
+          <h3>Input GeoJSON Data:</h3>
+          <textarea
+            id="inputGeoJSON"
+            placeholder="Paste your GeoJSON FeatureCollection here..."
+            style="height: 150px; margin-bottom: 10px"
+          ></textarea>
+          <button onclick="loadGeoJSON()">Load GeoJSON</button>
+          <button onclick="loadExample()">Load Example</button>
+          <span
+            id="loadStatus"
+            style="margin-left: 10px; font-weight: bold"
+          ></span>
+        </div>
+
+        <div class="control-group">
+          <label for="featureSelect">Feature to interpolate:</label>
+          <select
+            id="featureSelect"
+            onchange="selectFeature()"
+            title="Select a LineString feature to interpolate"
+          >
+            <option value="">Select a LineString feature...</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="methodSelect">Interpolation method:</label>
+          <select
+            id="methodSelect"
+            onchange="updateMethodControls()"
+            title="Select interpolation method"
+          >
+            <option value="catmullrom">Catmull-Rom Spline</option>
+            <option value="curvebasis">Curve Basis (B-Spline)</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="pointsSlider">Points per segment:</label>
+          <input
+            type="range"
+            id="pointsSlider"
+            min="2"
+            max="20"
+            value="5"
+            title="Number of points to add between each pair of coordinates"
+          />
+          <input
+            type="number"
+            id="pointsInput"
+            min="2"
+            max="50"
+            value="5"
+            title="Number of points to add between each pair of coordinates"
+          />
+        </div>
+
+        <div class="control-group" id="tensionControl">
+          <label for="tensionSlider">Tension (0-1):</label>
+          <input
+            type="range"
+            id="tensionSlider"
+            min="0"
+            max="1"
+            step="0.1"
+            value="0.5"
+            title="Tension parameter for Catmull-Rom spline"
+          />
+          <input
+            type="number"
+            id="tensionInput"
+            min="0"
+            max="1"
+            step="0.1"
+            value="0.5"
+            title="Tension parameter for Catmull-Rom spline"
+          />
+          <small style="display: block; color: #666; margin-top: 5px"
+            >Higher tension = tighter curves through points</small
+          >
+        </div>
+
+        <div class="control-group" id="smoothnessControl" style="display: none">
+          <label for="smoothnessSlider">Smoothness (0-1):</label>
+          <input
+            type="range"
+            id="smoothnessSlider"
+            min="0"
+            max="1"
+            step="0.1"
+            value="0.3"
+            title="Smoothness parameter for B-spline"
+          />
+          <input
+            type="number"
+            id="smoothnessInput"
+            min="0"
+            max="1"
+            step="0.1"
+            value="0.3"
+            title="Smoothness parameter for B-spline"
+          />
+          <small style="display: block; color: #666; margin-top: 5px"
+            >Higher smoothness = smoother curves (may not pass through original
+            points)</small
+          >
+        </div>
+        <div class="control-group">
+          <button onclick="interpolateLineString()">Interpolate</button>
+          <button onclick="resetToOriginal()">Reset to Original</button>
+          <button onclick="copyToClipboard()">Copy Result</button>
+        </div>
+      </div>
+
+      <div class="stats" id="stats">
+        Original points: 34 | Interpolated points: 0
+      </div>
+
+      <div class="output">
+        <h3>Interpolated GeoJSON:</h3>
+        <textarea
+          id="output"
+          readonly
+          title="Interpolated GeoJSON output"
+        ></textarea>
+      </div>
+
+      <div class="preview">
+        <h3>Coordinate Preview (first 10 points):</h3>
+        <div id="preview"></div>
+      </div>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
