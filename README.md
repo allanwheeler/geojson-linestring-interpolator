@@ -1,6 +1,6 @@
 # GeoJSON LineString Interpolator
 
-A web-based tool for interpolating points along GeoJSON LineString features using different spline interpolation methods. This tool is particularly useful for creating smoother paths or adding intermediate points to existing GeoJSON LineString features. If you need to "draw" custom points on a map that do not have definite geographic representations (e.g. First and Second Island Chains for China), use [geojson.io]([url](https://geojson.io/)). Simply paste the feature collection in to the text area and follow each input to get your transformed data.
+A web-based tool for interpolating points along GeoJSON LineString features using different spline interpolation methods. This tool is particularly useful for creating smoother paths or adding intermediate points to existing GeoJSON LineString features. If you need to "draw" custom points on a map that do not have definite geographic representations (e.g. First and Second Island Chains for China), use [geojson.io](https://geojson.io/). Simply paste the feature collection in to the text area and follow each input to get your transformed data.
 
 ## Features
 
